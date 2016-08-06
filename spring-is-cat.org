@@ -1,5 +1,6 @@
 #+TITLE: 봄은 고양이
 #+AUTHOR: 유용빈
+#+DATE: 2016-08-05
 #+LATEX_CMD: xelatex
 #+LaTeX_CLASS: oblivoir
 #+LaTeX_CLASS_OPTIONS: [a5paper,10.5pt]
