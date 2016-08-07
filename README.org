@@ -1,5 +1,11 @@
 * 봄은 고양이
   나비, 장마, 무명이에 대한 짧은 이야기
+** 저작권
+   CC 저작자표시-동일조건변경허락 2.0 대한민국  [[https://creativecommons.org/licenses/by-sa/2.0/kr/][CC BY-SA 2.0 KR]]
+** 변경사항
+   - v0.0.1 : 최초 작성
+   - v0.0.2 : 킨들 리뷰후 1차 교정(FB에 공개)
+   - v0.0.3 : README 작성, 출판물을 저장소에 포함
 ** 출판 환경
    - Emacs + org-mode
    - TexLive + oblivoir class
