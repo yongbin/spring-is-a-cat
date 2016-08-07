@@ -1,1 +1,67 @@
-spring-is-cat.org
+* 봄은 고양이
+  나비, 장마, 무명이에 대한 짧은 이야기
+** 출판 환경
+   - Emacs + org-mode
+   - TexLive + oblivoir class
+   - [[https://www.ctan.org/pkg/pdfcrop][pdfcrop]]
+   - [[http://www.foolabs.com/xpdf/download.html][xpdf]]'s pdftopng
+   - [[http://www.willus.com/k2pdfopt/][K2pdfopt]] (optional)
+** PDF, HTML 출판
+   - PDF, HTML 출판은 org-mode의 기본 Exporting 기능을 이용한다.
+   - PDF 내보내기를 위해서는 작업 환경에 TeX 출판환경이 구축되어 있어야 한다.
+     작업한 환경은 OSX [[https://www.tug.org/texlive/][TeXLive]] 2015 이며, 다른 운영체제도 대동소이하다.
+   - PDF에서 미려한 한글문서 조판을 위해 위해 [[https://www.ctan.org/pkg/kotex-oblivoir][oblivoir]] 클래스를 사용한다.
+     org-mode 내보내기에서 oblivoir를 부르기 위해서는 다음과 Emacs 설정이
+     필요하다.
+	 #+BEGIN_SRC lisp
+       (add-to-list 'org-latex-classes
+                 '("oblivoir"
+					"\\documentclass{oblivoir}"
+					("\\section{%s}" . "\\section*{%s}")
+					("\\subsection{%s}" . "\\subsection*{%s}")
+					("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+					("\\paragraph{%s}" . "\\paragraph*{%s}")
+					("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+	 #+END_SRC
+   - oblivoir의 기본 옵션으로 A5크기 종이 출판, 10.5pt 활자 크기를 지정한다.
+   - HTML 내보내기는 교정을 위해 킨들에 전송하기 위한 용도로만 사용되었으며,
+     org-mode 기본 내보내기를 사용한다.
+** 모바일용 이미지 출판
+   모바일용 이미지는 PDF 출판물의 테두리를 적절하게 잘라내고 이미지 형태로
+   변환해서 생성한다.
+*** PDF 자르기
+	PDF 출판물의 테두리를 제거를 위해서는 [[https://www.ctan.org/pkg/pdfcrop][pdfcrop]] 을 사용한다.
+
+	 - pdfcrop은 pdf에서 흰색과 검정색의 경계를 통해 자동으로 테두리 여백을 제거한다. --margins 옵션은 좌,상,우,하에 강제 여백을 주입하는 명령이다. - 기본적으로 한글문서를 잘라낼 경우 활자가 삐져나오기 때문에 약간의 기본 좌우여백이 필요하다.
+	 - Facebook 이미지 뷰어에서 이미지를 볼 때 우상단 이미지 태그와 옵션을 위한 겹쳐진 버튼이 보여지기때문에 적절한 상단여백을 확보하지 않으면 버튼이 본문 글을 가리게 된다.
+	 - 위 사항들을 고려한 최종 여백은 좌 20, 우, 20, 상 40, 하 40이다.
+
+	#+BEGIN_SRC sh
+      pdfcrop --margins "20 40 20 40" spring-is-cat.pdf
+	#+END_SRC
+*** PDF PNG 변환
+	PDF 출판물을 이미지로 변환하기 위해서는 [[http://www.foolabs.com/xpdf/download.html][Xpdf]] 꾸러미에 포함된 pdftopng를
+	사용한다.
+
+	- pdftopng는 '옵션', '변환할 PDF', '생성할 PNG 파일명'을 인자로 받고 전달된 PDF를 생성한 옵션에 따라 처리한 뒤 각 페이지당 하나의 파일로 전달받은 파일명에 순서번호를 붙여 PNG 파일을 생성한다.
+	- freetype, aaVector는 각각 FreeType font rasterizerd와 vector anti-aliasing을 활성화 하는 옵션이다.
+	- -r은 DPI를 조정하는 옵션이며 기본값은 150이다.
+	- 각각의 옵션은 최종 생성된 png파일의 크기에 영향을 준다. 아무런 옵션이 없이 실행된 결과물은 해상도가 높은 아이폰 5s와 같은 휴대기기에서 글씨가 뭉개지는 현상이 있었다.
+	- 최종적으로 freetype, aaVector를 키고, DPI를 1200정도 준 실행에서 만족할만한 수준의 결과물이  나왔다.
+	- 옵션의 기능과 효과에대해서 세세하게 검증하지는 않았다.
+
+	#+BEGIN_SRC sh
+      pdftopng -freetype yes \
+               -aaVector yes \
+               -r 1200 \
+               spring-is-cat-crop.pdf spring-is-cat
+	#+END_SRC
+
+	#+BEGIN_EXAMPLE
+      -rw-r--r--@  1 yongbin  staff   241K Aug  7 10:08 spring-is-cat-000001.png
+      -rw-r--r--   1 yongbin  staff   1.5M Aug  7 10:08 spring-is-cat-000002.png
+      -rw-r--r--   1 yongbin  staff   1.7M Aug  7 10:08 spring-is-cat-000003.png
+      -rw-r--r--   1 yongbin  staff   1.9M Aug  7 10:08 spring-is-cat-000004.png
+      -rw-r--r--   1 yongbin  staff   1.7M Aug  7 10:08 spring-is-cat-000005.png
+      -rw-r--r--   1 yongbin  staff   1.6M Aug  7 10:08 spring-is-cat-000006.png
+	#+END_EXAMPLE
