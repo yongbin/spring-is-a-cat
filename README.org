@@ -43,7 +43,7 @@
 	 - 위 사항들을 고려한 최종 여백은 좌 20, 우, 20, 상 40, 하 40이다.
 
 	#+BEGIN_SRC sh
-      pdfcrop --margins "20 40 20 40" spring-is-cat.pdf
+      pdfcrop --margins "20 40 20 40" spring-is-a-cat.pdf
 	#+END_SRC
 *** PDF PNG 변환
 	PDF 출판물을 이미지로 변환하기 위해서는 [[http://www.foolabs.com/xpdf/download.html][Xpdf]] 꾸러미에 포함된 pdftopng를
@@ -60,14 +60,14 @@
       pdftopng -freetype yes \
                -aaVector yes \
                -r 1200 \
-               spring-is-cat-crop.pdf spring-is-cat
+               spring-is-a-cat-crop.pdf spring-is-a-cat
 	#+END_SRC
 
 	#+BEGIN_EXAMPLE
-      -rw-r--r--@  1 yongbin  staff   241K Aug  7 10:08 spring-is-cat-000001.png
-      -rw-r--r--   1 yongbin  staff   1.5M Aug  7 10:08 spring-is-cat-000002.png
-      -rw-r--r--   1 yongbin  staff   1.7M Aug  7 10:08 spring-is-cat-000003.png
-      -rw-r--r--   1 yongbin  staff   1.9M Aug  7 10:08 spring-is-cat-000004.png
-      -rw-r--r--   1 yongbin  staff   1.7M Aug  7 10:08 spring-is-cat-000005.png
-      -rw-r--r--   1 yongbin  staff   1.6M Aug  7 10:08 spring-is-cat-000006.png
+      -rw-r--r--@  1 yongbin  staff   241K Aug  7 10:08 spring-is-a-cat-000001.png
+      -rw-r--r--   1 yongbin  staff   1.5M Aug  7 10:08 spring-is-a-cat-000002.png
+      -rw-r--r--   1 yongbin  staff   1.7M Aug  7 10:08 spring-is-a-cat-000003.png
+      -rw-r--r--   1 yongbin  staff   1.9M Aug  7 10:08 spring-is-a-cat-000004.png
+      -rw-r--r--   1 yongbin  staff   1.7M Aug  7 10:08 spring-is-a-cat-000005.png
+      -rw-r--r--   1 yongbin  staff   1.6M Aug  7 10:08 spring-is-a-cat-000006.png
 	#+END_EXAMPLE
